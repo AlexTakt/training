@@ -54,6 +54,8 @@ http://YOUR IP:8123/
 
 ### Установка Portainer
 docker pull portainer/portainer-ce
+    ## Result ## Digest: sha256:5064d8414091c175c55ef6f8744da1210819388c2136273b4607a629b7d93358
+    ## Result ## Status: Downloaded newer image for portainer/portainer-ce:latest
 docker volume create portainer_data
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
