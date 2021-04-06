@@ -4,27 +4,40 @@ https://www.armbian.com/
 ### Логин и пароль для первого входа
 root 1234
 
+###### Installing Home Assistant Supervised on Debian 10 https://is.gd/hNPrRd  ######
+
+
+### обновление списка пакетов + Обновление пакетов
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+
+### Useful for start :
+sudo apt install openssh-server -y
+sudo systemctl enable ssh.service	# must do on Kali Linux for permanent ssh
+armbianmonitor -m 			# check CPU
+
+### Часовой пояс
+sudo dpkg-reconfigure tzdata
+
+### install Home Assistant Supervised
+sudo -i
+apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
+# systemctl disable ModemManager
+# systemctl stop ModemManager
+curl -fsSL get.docker.com | sh
+curl -sL "https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh" | bash -s
+
+
+
+
+
 ### Программа для записи образа
 https://www.balena.io/etcher/
 
 ### Удобный SSH клиент - 
 https://www.putty.org/ 
 
-Копировать из консоли - просто выделить нужный фрагмент кода
-Вставить в консоль - правым кликом мышки
-
-### Подключение репозитория universe и обновление списка пакетов
-sudo add-apt-repository universe && sudo apt-get update
-
-### Обновление пакетов
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
-
 ### FTP сервер Midnight Commander  APP armor git watchdog ntpdate
 sudo apt-get -y install ftpd mc apparmor git watchdog bluez ntpdate
-
-### Часовой пояс
-sudo dpkg-reconfigure tzdata
 
 ### Установка WatchDog (при зависании компа - перегружает его)
 sudo ln -s  /lib/systemd/system/watchdog.service /etc/systemd/system/multi-user.target.wants/watchdog.service
