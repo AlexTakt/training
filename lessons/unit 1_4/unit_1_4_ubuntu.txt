@@ -3,17 +3,17 @@ https://www.armbian.com/
 
 ### Логин и пароль для первого входа
 root 1234
+armbian-config      ## For initial config like WiFi
 
 ###### Installing Home Assistant Supervised on Debian 10 https://is.gd/hNPrRd  ######
-
 
 ### обновление списка пакетов + Обновление пакетов
 sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
 ### Useful for start :
-sudo apt install openssh-server -y
-sudo systemctl enable ssh.service	# must do on Kali Linux for permanent ssh
-armbianmonitor -m 			# check CPU
+# sudo apt install openssh-server -y        ## If not installed
+sudo systemctl enable ssh.service	        # must do on Kali Linux for permanent ssh
+armbianmonitor -m 			                # check CPU
 
 ### Часовой пояс
 sudo dpkg-reconfigure tzdata
@@ -23,9 +23,16 @@ sudo -i
 apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
 # systemctl disable ModemManager
 # systemctl stop ModemManager
-curl -fsSL get.docker.com | sh
-curl -sL "https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh" | bash -s
 
+curl -fsSL get.docker.com | sh
+### Добавление пользователя docker
+sudo usermod -aG docker alex
+sudo reboot
+
+### Install Home Assistant
+curl -sL "https://raw.githubusercontent.com/Kanga-Who/home-assistant/master/supervised-installer.sh" | bash -s -- -m raspberrypi4
+
+sudo docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 
 
 
